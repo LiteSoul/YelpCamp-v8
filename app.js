@@ -3,10 +3,17 @@ const app = express()
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
+const Campground = require("./models/campground")
+
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({extended:true}))
 //connect to a db, and creating it:
-mongoose.connect("mongodb://localhost/yelp_camp")
+//mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp")
+// Using `mongoose.connect`...
+let promise = mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp", {
+	useMongoClient: true,
+	/* other options */
+})
 
 // Campground.create({
 // 	name:"Vicio-el-rocknroll",
