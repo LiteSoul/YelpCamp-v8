@@ -2,14 +2,13 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
-
+//models require
 const Campground = require("./models/campground")
+//add seeds.js and execute seed function to destroy and create new sample data on db
 const seedDB = require("./seeds")
-//execute the seed function
 seedDB()
 
-app.set("view engine", "ejs")
-app.use(bodyParser.urlencoded({extended:true}))
+//-------------------CONNECT TO DB--------------
 //connect to a db, and creating it:
 //mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp")
 // Using `mongoose.connect`...
@@ -18,33 +17,13 @@ let promise = mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp
 	/* other options */
 })
 
-// Campground.create({
-// 	name:"Vicio-el-rocknroll",
-// 	image:"https://farm4.staticflickr.com/3393/3510641019_bc91eb6818.jpg"
-// },function(err,campground){
-// 	if(err){
-// 		console.log("ERROR IS: " + err)
-// 	} else{
-// 		console.log("You just created: " + campground)
-// 	}
-// })
-
-// var campinggrounds = [
-// 	{name:"Rosario", image:"https://farm4.staticflickr.com/3062/2984119099_82336dfc3b.jpg"},
-// 	{name:"Victoria", image:"https://farm7.staticflickr.com/6103/6333668591_90e7c2bc72.jpg"},
-// 	{name:"Colastiné", image:"https://farm4.staticflickr.com/3393/3510641019_bc91eb6818.jpg"},
-// 	{name:"Rosario", image:"https://farm4.staticflickr.com/3062/2984119099_82336dfc3b.jpg"},
-// 	{name:"Victoria", image:"https://farm7.staticflickr.com/6103/6333668591_90e7c2bc72.jpg"},
-// 	{name:"Colastiné", image:"https://farm4.staticflickr.com/3393/3510641019_bc91eb6818.jpg"},
-// 	{name:"Rosario", image:"https://farm4.staticflickr.com/3062/2984119099_82336dfc3b.jpg"},
-// 	{name:"Victoria", image:"https://farm7.staticflickr.com/6103/6333668591_90e7c2bc72.jpg"},
-// 	{name:"Colastiné", image:"https://farm4.staticflickr.com/3393/3510641019_bc91eb6818.jpg"}
-// ]
-
+//---------------APP CONFIG-----------------
+app.set("view engine", "ejs")
+app.use(bodyParser.urlencoded({extended:true}))
+//---------------APP ROUTING----------------
 app.get("/", function(req, res) {
 	res.render("landing")
 })
-
 //FIRST USE OF A FAT ARROW YAY!!
 //INDEX route - show all campgrounds
 app.get("/campgrounds", (req, res) => {
@@ -65,7 +44,7 @@ app.post("/campgrounds", function(req, res){
 	var name = req.body.name
 	var image = req.body.image
 	var description = req.body.description
-	var newCampground = {name, image,description}
+	var newCampground = {name, image, description}
 	//Create a new campground and save it to DB:
 	Campground.create(newCampground,function(err,new_camp){
 		if(err){console.log(err)}
@@ -86,6 +65,8 @@ app.get("/campgrounds/:id",function(req,res){
 	//find the campground with provided id
 	//that :id is being captured here with .params
 	//mongoose gives us this method: .findById(id,callback)
+	//comments are coming back with an array of ObjectId,so we need to .populate.exec
+	//to populate the found campground with the comments
 	Campground.findById(req.params.id).populate("comments").exec(function(err,foundCamp){
 		if(err){console.log(err)}
 		else{
