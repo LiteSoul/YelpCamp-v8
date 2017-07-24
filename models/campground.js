@@ -4,7 +4,13 @@ const mongoose = require("mongoose")
 var campgroundSchema = new mongoose.Schema({
 	name:String,
 	image:String,
-	description:String
+	description:String,
+	comments: [
+		{
+			type: mongoose.Schema.Types.ObjectID,
+			ref: "Comment"
+		}
+	]
 })
 //compile that schema into a model (usually w/ capital first letter)
 //to have all the .methods:

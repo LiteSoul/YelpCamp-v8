@@ -86,7 +86,7 @@ app.get("/campgrounds/:id",function(req,res){
 	//find the campground with provided id
 	//that :id is being captured here with .params
 	//mongoose gives us this method: .findById(id,callback)
-	Campground.findById(req.params.id,function(err,foundCamp){
+	Campground.findById(req.params.id).populate("comments").exec(function(err,foundCamp){
 		if(err){console.log(err)}
 		else{
 			//render show template with that campground
