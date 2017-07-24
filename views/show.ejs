@@ -5,12 +5,14 @@
 	<h3><%= campground.name %></h3>
 	<h5><%= campground.description %></h5>
 </div>
+<br>
 
-<div class="container" s//tyle="margin:0 auto">
-		<% campground.comments.forEach(function(comment){ %>
-			<p><%= comment.author %></p>
-			<p><%= comment.text %></p>
-		<% }) %>
+<div class="container">
+	<h6>Comments:</h6>
+	<% campground.comments.forEach(function(comment){ %>
+		<p><%= comment.author %></p>
+		<p><%= comment.text %></p>
+	<% }) %>
 </div>
 
 <% include partials/footer %>
