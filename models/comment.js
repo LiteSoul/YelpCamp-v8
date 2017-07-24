@@ -5,4 +5,4 @@ let commentSchema = mongoose.Schema({
 	author: String
 })
 
-module.exports = mongoose.Model("Comment",commentSchema)
+module.exports = mongoose.model("Comment",commentSchema)
