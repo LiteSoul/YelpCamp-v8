@@ -10,8 +10,8 @@
 <div class="container">
 	<h6>Comments:</h6>
 	<% campground.comments.forEach(function(comment){ %>
-		<p><%= comment.author %></p>
-		<p><%= comment.text %></p>
+		<p><%= comment.author %> - 
+		<%= comment.text %></p>
 	<% }) %>
 </div>
 
