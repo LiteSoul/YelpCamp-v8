@@ -12,7 +12,8 @@ var data = [
 ]
 
 function seedDB(){
-	// Clear/remove db content
+	// Clear/remove db Campground content
+	// ----> but so far comments are not removed! eg. Comment.remove({})
 	Campground.remove({},(err) => {
 		if(err){console.log(err)}
 		console.log("Removed campgrounds!")
