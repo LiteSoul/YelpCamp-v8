@@ -29,9 +29,18 @@
 
 			<div class="card">
 				<% campground.comments.forEach(function(comment){ %>
+					<div class="card-header">
+						<span class="text-left"><%= comment.author %></span>
+						<span class="text-right">10 days ago</span>
+					</div>
 					<div class="card-block">
-						<h6 class="card-title"><%= comment.author %></h6>
+						
+						
+						
+						
+
 						<p class="card-text"><%= comment.text %></p>
+						
 					</div>
 				<% }) %>
 				<a href="/campgrounds/<%= campground._id %>/comments/new" class="btn btn-primary">Add a Comment</a>
