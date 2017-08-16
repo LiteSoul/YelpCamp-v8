@@ -13,20 +13,36 @@ var data = [
 
 function seedDB(){
 	// Clear/remove db Campground content
-	// ----> but so far comments are not removed! eg. Comment.remove({})
+	// ----> but so far comments are not removed! eg. Comment.remove({})but only works like this:
+	Comment.remove({}, function () {
+	// if no error, your comments are removed
+		console.log("Comments removed")
+	})
 	Campground.remove({},(err) => {
 		if(err){console.log(err)}
-		console.log("Removed campgrounds!")
+		console.log("Campgrounds removed")
 		// Add a few campgrounds right after removing them, in this callback
 		data.forEach(function(seed) {
 			Campground.create(seed,function(err,campground){
 				if(err){console.log(err)}
 				else{
-					console.log("campground added")
+					console.log("Campground added")
 					// add a comment
 					Comment.create({
 						text: "I went there, it was great! Just very cold on winter! xoxo",
 						author: "Piñón Fijo"
+					}, function(err, comment){
+						if(err){console.log(err)}
+						else{
+							campground.comments.push(comment)
+							campground.save()
+							console.log("New comment created")
+						}
+					})
+					// add another comment
+					Comment.create({
+						text: "I'm here right now...waiting for ya! xoxo",
+						author: "Vicky the beautiful"
 					}, function(err, comment){
 						if(err){console.log(err)}
 						else{
