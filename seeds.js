@@ -8,7 +8,9 @@ var data = [
 	{name:"Victoria", image:"https://farm7.staticflickr.com/6103/6333668591_90e7c2bc72.jpg",
 		description:"This campground is great for campfires and tents, but don't be tempted...ha. Here's a bunch of numbers. They may look random but they're my phone number. I'm no hero. I just put my bra on."},
 	{name:"Colastiné", image:"https://farm4.staticflickr.com/3393/3510641019_bc91eb6818.jpg",
-		description:"This campground is great for campfires and tents, but don't be tempted...ha. Here's a bunch of numbers. They may look random but they're my phone number. I'm no hero. I just put my bra on."}
+		description:"This campground is great for campfires and tents, but don't be tempted...ha. Here's a bunch of numbers. They may look random but they're my phone number. I'm no hero. I just put my bra on."},
+	{name:"Extreme Camping", image:"https://upload.wikimedia.org/wikipedia/commons/e/e2/Boy_Scout_camp_in_the_snow.jpg",
+		description:"Only the breavest and well prepared should come here, as this is a dangerous but rewarding place. We welcome you with all the basic tools for survival so as to camp safely as possible, with emergency services operating 24/7 from the town 2kms away."}
 ]
 
 function seedDB(){
