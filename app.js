@@ -140,7 +140,7 @@ app.post("/campgrounds/:id/comments", function(req, res){
 })
 
 //-------------AUTH ROUTES-----------------
-app.get("/signup"),(req.res)=>{
+app.get("/signup"),(req,res)=>{
 	res.render("auth/signup")
 }
 
