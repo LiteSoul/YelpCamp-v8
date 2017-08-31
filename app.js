@@ -5,15 +5,20 @@ const mongoose = require("mongoose")
 //models require
 const Campground = require("./models/campground")
 const Comment = require("./models/comment")
+//user model for auth
+const User = require("./models/user")
 //add seeds.js and execute seed function to destroy and create new sample data on db
 const seedDB = require("./seeds")
 seedDB()
-
+//for user authentication
+const passport = require("passport")
+const LocalStrategy = require("passport-local")
+const session = require("express-session")
 //-------------------CONNECT TO DB--------------
 //connect to a db, and creating it:
 //mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp")
 // Using `mongoose.connect`...
-let promise = mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp", {
+let promise = mongoose.connect("mongodb://yelpv6:yelpv6@ds151963.mlab.com:51963/yelp-v6", {
 	useMongoClient: true,
 	/* other options */
 })
@@ -24,6 +29,17 @@ app.use(bodyParser.urlencoded({extended:true}))
 // official is this, but path not defined:
 //app.use(express.static(path.join(__dirname, "public")))
 app.use(express.static(__dirname + "/public"))
+
+//---------------PASSPORT CONFIG-----------------
+app.use(session({
+	secret: "pasaporte falso",
+	resave: false,
+	saveUninitialized: false
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 //---------------APP ROUTING----------------
 app.get("/", function(req, res) {
 	res.render("landing")
