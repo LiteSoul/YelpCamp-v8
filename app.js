@@ -38,7 +38,12 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-
+//use localstrategy and give it a method (User.authenticate)from local-mongoose plugin
+passport.use(new LocalStrategy(User.authenticate()))
+// use static serialize and deserialize of model for passport session support
+//serializeUser and deserializeUser methods taken from local-mongoose, it's easier
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 //---------------APP ROUTING----------------
 app.get("/", function(req, res) {
@@ -133,6 +138,12 @@ app.post("/campgrounds/:id/comments", function(req, res){
 		}
 	})
 })
+
+//-------------AUTH ROUTES-----------------
+app.get("/signup"),(req.res)=>{
+	res.render("auth/signup")
+}
+
 
 //-------------404 PAGE-----------------
 app.get("*", function(req, res){
