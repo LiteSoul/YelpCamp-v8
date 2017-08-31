@@ -21,6 +21,9 @@ let promise = mongoose.connect("mongodb://yelp:yelp@ds028310.mlab.com:28310/yelp
 //---------------APP CONFIG-----------------
 app.set("view engine", "ejs")
 app.use(bodyParser.urlencoded({extended:true}))
+// official is this, but path not defined:
+//app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(__dirname + "/public"))
 //---------------APP ROUTING----------------
 app.get("/", function(req, res) {
 	res.render("landing")
