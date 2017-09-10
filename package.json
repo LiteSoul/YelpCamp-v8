@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "It's a mix of Yelp and campgrounds",
   "main": "app.js",
-  "repository": "https://github.com/LiteSoul/YelpCamp.git",
+  "repository": "https://github.com/LiteSoul/YelpCamp-v6.git",
   "author": "Ariel Blasi <exorcismo@gmail.com>",
   "license": "MIT",
   "dependencies": {
