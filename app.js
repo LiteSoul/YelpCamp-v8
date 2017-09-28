@@ -47,6 +47,12 @@ passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
 passport.deserializeUser(User.deserializeUser())
 
+//creates middleware to pass user data (check if logged in) for EVERY route
+app.use((req, res, next) => {
+	res.locals.currentUser = req.user
+	next()
+})
+
 //---------------APP ROUTING----------------
 app.get('/', function(req, res) {
 	res.render('landing')
@@ -54,13 +60,17 @@ app.get('/', function(req, res) {
 //FIRST USE OF A FAT ARROW YAY!!
 //INDEX route - show all campgrounds
 app.get('/campgrounds', (req, res) => {
+	//console.log(req.user) to check for user loggedin data or undefined
 	//get all (all is {}) campgrounds from db:
 	Campground.find({}, (err, all_campings) => {
 		if (err) {
 			console.log(err)
 		} else {
 			//render it:
-			res.render('campgrounds/index', { campgrounds: all_campings })
+			res.render('campgrounds/index', {
+				campgrounds: all_campings,
+				currentUser: req.user
+			})
 		}
 	})
 })
@@ -108,7 +118,7 @@ app.get('/campgrounds/:id', function(req, res) {
 })
 
 //----------COMMENTS ROUTES-------------
-app.get('/campgrounds/:id/comments/new', isLoggedIn,(req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
 	//see SHOW campground route for method
 	Campground.findById(req.params.id, function(err, foundCamp) {
 		if (err) {
@@ -120,7 +130,7 @@ app.get('/campgrounds/:id/comments/new', isLoggedIn,(req, res) => {
 })
 
 //CREATE route - add new comment to campground
-app.post('/campgrounds/:id/comments', isLoggedIn,function(req, res) {
+app.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 	//Create a new comment and save it to DB:
 	Campground.findById(req.params.id, function(err, foundCamp) {
 		if (err) {
@@ -181,8 +191,10 @@ app.get('/logout', (req, res) => {
 })
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback
-function isLoggedIn(req,res,next){
-	if(req.isAuthenticated()){return next()}
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next()
+	}
 	res.redirect('/login')
 }
 
