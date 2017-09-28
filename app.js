@@ -108,7 +108,7 @@ app.get('/campgrounds/:id', function(req, res) {
 })
 
 //----------COMMENTS ROUTES-------------
-app.get('/campgrounds/:id/comments/new', (req, res) => {
+app.get('/campgrounds/:id/comments/new', isLoggedIn,(req, res) => {
 	//see SHOW campground route for method
 	Campground.findById(req.params.id, function(err, foundCamp) {
 		if (err) {
@@ -120,7 +120,7 @@ app.get('/campgrounds/:id/comments/new', (req, res) => {
 })
 
 //CREATE route - add new comment to campground
-app.post('/campgrounds/:id/comments', function(req, res) {
+app.post('/campgrounds/:id/comments', isLoggedIn,function(req, res) {
 	//Create a new comment and save it to DB:
 	Campground.findById(req.params.id, function(err, foundCamp) {
 		if (err) {
@@ -163,6 +163,29 @@ app.post('/signup', (req, res) => {
 		})
 	})
 })
+app.get('/login', (req, res) => {
+	res.render('auth/login')
+})
+//app.post(login route, middleware, callback)
+app.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/campgrounds',
+		failureRedirect: '/login'
+	}),
+	(req, res) => {}
+)
+app.get('/logout', (req, res) => {
+	req.logout() //this method comes with the pkg we installed
+	res.redirect('/campgrounds')
+})
+//checks if is logged in before doing the next step
+//this functions as a middleware, use it after a route, before the callback
+function isLoggedIn(req,res,next){
+	if(req.isAuthenticated()){return next()}
+	res.redirect('/login')
+}
+
 //-------------404 PAGE-----------------
 app.get('*', (req, res) => {
 	res.send('404 NOTHING TO SEE HERE...')
