@@ -68,8 +68,7 @@ app.get('/campgrounds', (req, res) => {
 		} else {
 			//render it:
 			res.render('campgrounds/index', {
-				campgrounds: all_campings,
-				currentUser: req.user
+				campgrounds: all_campings
 			})
 		}
 	})
