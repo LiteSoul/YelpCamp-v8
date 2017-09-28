@@ -153,7 +153,15 @@ app.get('/signup', (req, res) => {
 })
 app.post('/signup', (req, res) => {
 	let newUser = new User({ username: req.body.username })
-	User.register(newUser, req.body.password, (err, user) => {})
+	User.register(newUser, req.body.password, (err, user) => {
+		if (err) {
+			console.log(err)
+			return res.render('auth/signup')
+		}
+		passport.authenticate('local')(req, res, () => {
+			res.redirect('/campgrounds')
+		})
+	})
 })
 //-------------404 PAGE-----------------
 app.get('*', (req, res) => {
