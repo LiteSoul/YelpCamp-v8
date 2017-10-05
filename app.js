@@ -206,5 +206,5 @@ app.get('*', (req, res) => {
 let port = process.env.PORT || 3000
 //check connection through express
 app.listen(port, function() {
-	console.log('Our app is running on http://localhost:' + port)
+	console.log(`Our app is running on http://localhost:${port}`)
 })
