@@ -1,14 +1,14 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 
 //setup schema:
-var campgroundSchema = new mongoose.Schema({
-	name:String,
-	image:String,
-	description:String,
+let campgroundSchema = new mongoose.Schema({
+	name: String,
+	image: String,
+	description: String,
 	comments: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: "Comment"
+			ref: 'Comment'
 		}
 	]
 })
@@ -16,4 +16,4 @@ var campgroundSchema = new mongoose.Schema({
 //to have all the .methods:
 //var Campground = mongoose.model("Campground",campgroundSchema)
 // refactor above code to export it to a module
-module.exports = mongoose.model("Campground",campgroundSchema)
+module.exports = mongoose.model('Campground', campgroundSchema)

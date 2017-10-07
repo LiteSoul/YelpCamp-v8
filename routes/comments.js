@@ -4,7 +4,7 @@ const router = express.Router()
 const Campground = require('../models/campground')
 const Comment = require('../models/comment')
 
-//----------COMMENTS ROUTES-------------
+//Comments new
 router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
 	//see SHOW campground route for method
 	Campground.findById(req.params.id, function(err, foundCamp) {
@@ -16,7 +16,7 @@ router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
 	})
 })
 
-//CREATE route - add new comment to campground
+//Comments create
 router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 	//Create a new comment and save it to DB:
 	Campground.findById(req.params.id, function(err, foundCamp) {
@@ -34,6 +34,12 @@ router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 				if (err) {
 					console.log(err)
 				} else {
+					//add username and id to comment
+					new_comm.author.id = req.user._id
+					new_comm.author.username = req.user.username
+					//save comment
+					new_comm.save()
+					//push it into the comments
 					foundCamp.comments.push(new_comm)
 					foundCamp.save()
 					// redirect back to campground, default is GET campground:

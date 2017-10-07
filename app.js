@@ -9,7 +9,7 @@ const Comment = require('./models/comment')
 const User = require('./models/user')
 //add seeds.js and execute seed function to destroy and create new sample data on db
 const seedDB = require('./seeds')
-seedDB()
+//seedDB() //Seed the DB
 //for user authentication
 const passport = require('passport')
 const LocalStrategy = require('passport-local')

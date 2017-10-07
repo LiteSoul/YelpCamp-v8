@@ -1,66 +1,74 @@
 <% include ../partials/header %>
 
-<div class="container">
-	
-	<div class="row">
-		
-		<div class="col-md-3">
-			<p class="lead">YelpCamp</p>
-			<div class="list-group">
-				<li class="list-group-item">Info 1</li>
-				<li class="list-group-item active">Info 2</li>
-				<li class="list-group-item">Info 3</li>
-			</div>
-		</div>
+	<div class="container">
 
-		<div class="col-md-9">
+		<div class="row">
 
-			<div class="card">
-				<img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
-				<div class="card-body">
-					<strong class="card-title"><a href=""><%= campground.name %></a></strong>
-					<span class="float-right">€9.00/night</span>
-					<p class="card-text"><%= campground.description %></p>
+			<div class="col-md-3">
+				<p class="lead">YelpCamp</p>
+				<div class="list-group">
+					<li class="list-group-item">Info 1</li>
+					<li class="list-group-item active">Info 2</li>
+					<li class="list-group-item">Info 3</li>
 				</div>
 			</div>
 
-			<div class="card" style="margin-top:1rem">
-				<div class="card-header" style="border-bottom:red">
-					Reviews
-					<a href="/campgrounds/<%= campground._id %>/comments/new">
-						<button type="button" class="btn btn-outline-primary float-right">
-							Add a Review
-						</button>
-					</a>
+			<div class="col-md-9">
+
+				<div class="card">
+					<img class="card-img-top" src="<%= campground.image %>" alt="Card image cap">
+					<div class="card-body">
+						<strong class="card-title">
+							<a href="">
+								<%= campground.name %>
+							</a>
+						</strong>
+						<span class="float-right">€9.00/night</span>
+						<p class="card-text">
+							<%= campground.description %>
+						</p>
+					</div>
 				</div>
 
-				<ul class="list-group list-group-flush">
+				<div class="card" style="margin-top:1rem">
+					<div class="card-header" style="border-bottom:red">
+						Reviews
+						<a href="/campgrounds/<%= campground._id %>/comments/new">
+							<button type="button" class="btn btn-outline-primary float-right">
+								Add a Review
+							</button>
+						</a>
+					</div>
+
+					<ul class="list-group list-group-flush">
 						<% campground.comments.forEach(function(comment){ %>
 							<li class="list-group-item">
 								<blockquote class="blockquote mb-0">
-									<p>★★★★☆ <%= comment.text %></p>
+									<p>★★★★☆
+										<%= comment.text %>
+									</p>
 									<footer class="blockquote-footer">
-										<%= comment.author %>
-										<span class="float-right">10 days ago</span>
+										<%= comment.author.username %>
+											<span class="float-right">10 days ago</span>
 									</footer>
 								</blockquote>
 							</li>
-						<% }) %>
-				</ul>
+							<% }) %>
+					</ul>
 
-				<!-- <div class="card-footer" style="border-top:red">
+					<!-- <div class="card-footer" style="border-top:red">
 						<a href="/campgrounds/<%= campground._id %>/comments/new">
 							<button type="button" class="btn btn-outline-primary float-right">
 								Add a Review
 							</button>
 						</a>
 				</div> -->
+				</div>
+
 			</div>
 
 		</div>
 
 	</div>
 
-</div>
-
-<% include ../partials/footer %>
+	<% include ../partials/footer %>
