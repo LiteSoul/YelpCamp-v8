@@ -4,6 +4,8 @@ const router = express.Router()
 const Campground = require('../models/campground')
 //user model for auth
 const User = require('../models/user')
+//for user authentication
+const passport = require('passport')
 
 //---------------APP ROUTING----------------
 router.get('/', function(req, res) {
