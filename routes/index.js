@@ -1,5 +1,9 @@
 const express = require('express')
 const router = express.Router()
+//models require
+const Campground = require('./models/campground')
+//user model for auth
+const User = require('./models/user')
 
 //---------------APP ROUTING----------------
 router.get('/', function(req, res) {
@@ -54,6 +58,7 @@ router.get('/logout', (req, res) => {
 	req.logout() //this method comes with the pkg we installed
 	res.redirect('/campgrounds')
 })
+
 //checks if is logged in before doing the next step
 //this functions as a middleware, use it after a route, before the callback
 function isLoggedIn(req, res, next) {
@@ -62,5 +67,4 @@ function isLoggedIn(req, res, next) {
 	}
 	res.redirect('/login')
 }
-
 module.exports = router

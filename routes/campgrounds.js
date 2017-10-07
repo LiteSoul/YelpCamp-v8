@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+//models require
+const Campground = require('./models/campground')
 
 //CREATE route - add new campground to DB
 router.post('/campgrounds', function(req, res) {

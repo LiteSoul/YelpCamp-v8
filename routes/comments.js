@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+//models require
+const Campground = require('./models/campground')
+const Comment = require('./models/comment')
 
 //----------COMMENTS ROUTES-------------
 router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
@@ -40,5 +43,14 @@ router.post('/campgrounds/:id/comments', isLoggedIn, function(req, res) {
 		}
 	})
 })
+
+//checks if is logged in before doing the next step
+//this functions as a middleware, use it after a route, before the callback
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next()
+	}
+	res.redirect('/login')
+}
 
 module.exports = router
