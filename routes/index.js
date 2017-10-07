@@ -1,0 +1,66 @@
+const express = require('express')
+const router = express.Router()
+
+//---------------APP ROUTING----------------
+router.get('/', function(req, res) {
+	res.render('landing')
+})
+//FIRST USE OF A FAT ARROW YAY!!
+//INDEX route - show all campgrounds
+router.get('/campgrounds', (req, res) => {
+	//console.log(req.user) to check for user loggedin data or undefined
+	//get all (all is {}) campgrounds from db:
+	Campground.find({}, (err, all_campings) => {
+		if (err) {
+			console.log(err)
+		} else {
+			//render it:
+			res.render('campgrounds/index', {
+				campgrounds: all_campings
+			})
+		}
+	})
+})
+
+//-------------AUTH ROUTES-----------------
+router.get('/signup', (req, res) => {
+	res.render('auth/signup')
+})
+router.post('/signup', (req, res) => {
+	let newUser = new User({ username: req.body.username })
+	User.register(newUser, req.body.password, (err, user) => {
+		if (err) {
+			console.log(err)
+			return res.render('auth/signup')
+		}
+		passport.authenticate('local')(req, res, () => {
+			res.redirect('/campgrounds')
+		})
+	})
+})
+router.get('/login', (req, res) => {
+	res.render('auth/login')
+})
+//app.post(login route, middleware, callback)
+router.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/campgrounds',
+		failureRedirect: '/login'
+	}),
+	(req, res) => {}
+)
+router.get('/logout', (req, res) => {
+	req.logout() //this method comes with the pkg we installed
+	res.redirect('/campgrounds')
+})
+//checks if is logged in before doing the next step
+//this functions as a middleware, use it after a route, before the callback
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next()
+	}
+	res.redirect('/login')
+}
+
+module.exports = router
