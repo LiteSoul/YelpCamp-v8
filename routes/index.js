@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 //models require
-const Campground = require('./models/campground')
+const Campground = require('../models/campground')
 //user model for auth
-const User = require('./models/user')
+const User = require('../models/user')
 
 //---------------APP ROUTING----------------
 router.get('/', function(req, res) {

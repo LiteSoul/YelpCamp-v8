@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 //models require
-const Campground = require('./models/campground')
-const Comment = require('./models/comment')
+const Campground = require('../models/campground')
+const Comment = require('../models/comment')
 
 //----------COMMENTS ROUTES-------------
 router.get('/campgrounds/:id/comments/new', isLoggedIn, (req, res) => {
