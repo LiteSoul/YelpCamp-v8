@@ -4,17 +4,22 @@ const router = express.Router()
 const Campground = require('../models/campground')
 
 //CREATE route - add new campground to DB
-router.post('/campgrounds', function(req, res) {
+router.post('/campgrounds', isLoggedIn, function(req, res) {
 	// get data from form and add to campgrounds array
 	var name = req.body.name
 	var image = req.body.image
 	var description = req.body.description
-	var newCampground = { name, image, description }
+	let author = {
+		id: req.user._id,
+		username: req.user.username
+	}
+	var newCampground = { name, image, description, author }
 	//Create a new campground and save it to DB:
 	Campground.create(newCampground, function(err, new_camp) {
 		if (err) {
 			console.log(err)
 		} else {
+			console.log(new_camp)
 			// redirect back to campgrounds, default is GET campgrounds:
 			res.redirect('/campgrounds')
 		}
@@ -22,7 +27,7 @@ router.post('/campgrounds', function(req, res) {
 })
 
 //NEW - show form to create new campground
-router.get('/campgrounds/new', function(req, res) {
+router.get('/campgrounds/new', isLoggedIn, function(req, res) {
 	res.render('campgrounds/new')
 })
 
@@ -44,5 +49,14 @@ router.get('/campgrounds/:id', function(req, res) {
 			}
 		})
 })
+
+//checks if is logged in before doing the next step
+//this functions as a middleware, use it after a route, before the callback
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next()
+	}
+	res.redirect('/login')
+}
 
 module.exports = router

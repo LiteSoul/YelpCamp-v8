@@ -32,6 +32,7 @@ router.get('/campgrounds', (req, res) => {
 router.get('/signup', (req, res) => {
 	res.render('auth/signup')
 })
+
 router.post('/signup', (req, res) => {
 	let newUser = new User({ username: req.body.username })
 	User.register(newUser, req.body.password, (err, user) => {
@@ -44,9 +45,11 @@ router.post('/signup', (req, res) => {
 		})
 	})
 })
+
 router.get('/login', (req, res) => {
 	res.render('auth/login')
 })
+
 //app.post(login route, middleware, callback)
 router.post(
 	'/login',
@@ -56,6 +59,7 @@ router.post(
 	}),
 	(req, res) => {}
 )
+
 router.get('/logout', (req, res) => {
 	req.logout() //this method comes with the pkg we installed
 	res.redirect('/campgrounds')
