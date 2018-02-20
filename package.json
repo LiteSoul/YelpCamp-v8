@@ -1,5 +1,5 @@
 {
-	"name": "yelpcamp-v6",
+	"name": "yelpcamp-v8",
 	"version": "1.0.0",
 	"description": "It's a mix of Yelp and campgrounds",
 	"main": "app.js",
@@ -7,7 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node app.js"
 	},
-	"repository": "https://github.com/LiteSoul/YelpCamp-v6.git",
+	"repository": "https://github.com/LiteSoul/YelpCamp-v8.git",
 	"author": "Ariel Blasi <exorcismo@gmail.com>",
 	"license": "MIT",
 	"dependencies": {
